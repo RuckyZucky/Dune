@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Dune.Framework;
 using UnityEngine;
 
-namespace Dune.Framework
+namespace Dune.Objects
 {
     public class DuneEmpty : ChildrenRenderDuneObject
     {
@@ -11,11 +12,6 @@ namespace Dune.Framework
         public string Tag { get; init; } = "Untagged";
 
         public int Layer { get; init; } = 0;
-
-        public DuneEmpty() : base(new List<DuneObject>())
-        {
-
-        }
 
         public override GameObject CreateGameObject()
         {

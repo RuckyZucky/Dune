@@ -7,17 +7,12 @@ namespace Dune.Framework
 {
     public abstract class ChildrenRenderDuneObject : RenderDuneObject
     {
-        private List<DuneObject> _children;
+        private readonly List<DuneObject> _children = new();
 
         public List<DuneObject> Children
         {
             get => _children;
             init => _children = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        protected ChildrenRenderDuneObject(List<DuneObject> children)
-        {
-            _children = children;
         }
 
         public override DuneElement CreateElement()
