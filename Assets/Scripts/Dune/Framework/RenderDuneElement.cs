@@ -29,6 +29,12 @@ namespace Dune.Framework
             _render.transform.parent = (ancestor as RenderDuneElement)?.Render!.transform;
         }
 
+        public override void Unmount()
+        {
+            base.Unmount();
+            UnityEngine.Object.Destroy(_render);
+        }
+
         public override void Rebuild()
         {
             (Object as RenderDuneObject)!.UpdateGameObject(ref _render);

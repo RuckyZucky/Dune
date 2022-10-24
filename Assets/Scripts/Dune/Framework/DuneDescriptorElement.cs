@@ -40,6 +40,12 @@ namespace Dune.Framework
             
         }
 
+        public override void Unmount()
+        {
+            base.Unmount();
+            UnityEngine.Object.Destroy(_component);
+        }
+
         public override void Update(ref DuneObject duneObject)
         {
             base.Update(ref duneObject);

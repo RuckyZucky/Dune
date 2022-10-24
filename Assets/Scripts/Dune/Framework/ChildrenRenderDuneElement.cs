@@ -1,6 +1,8 @@
 ﻿#nullable enable
 
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Dune.Framework
 {
@@ -24,6 +26,59 @@ namespace Dune.Framework
             }
 
             _children = newChildren;
+        }
+
+        public override void Unmount()
+        {
+            foreach (var child in _children)
+            {
+                child.Unmount();
+            }
+
+            base.Unmount();
+        }
+
+        public override void Rebuild()
+        {
+            base.Rebuild();
+            List<DuneElement> oldChildren = _children;
+            List<DuneObject> newObjects = (Object as ChildrenRenderDuneObject)!.Children;
+            List<DuneElement?> newChildren = Enumerable.Repeat<DuneElement?>(null, newObjects.Count).ToList();
+            for (var index = 0; index < newChildren.Count; index++)
+            {
+                var child = oldChildren.ElementAtOrDefault(index);
+                var newObject = newObjects[index];
+                var newChild = newObject.CreateElement();
+                if (child != null)
+                {
+                    if (child.Object?.GetType() == newObject.GetType())
+                    {
+                        Debug.Log("Just Update");
+                        child.Update(ref newObject);
+                        newChildren[index] = child;
+                    }
+                    else
+                    {
+                        Debug.Log($"Recreate because {child.Object?.GetType()} is not {newObject.GetType()}");
+                        Owner!.InactiveElements.Add(child);
+                        newChildren[index] = newChild;
+                        newChild.Mount(this);
+                    }
+                }
+                else
+                {
+                    Debug.Log("Create new");
+                    newChildren[index] = newChild;
+                    newChild.Mount(this);
+                }
+            }
+
+            for (var index = newChildren.Count; index < oldChildren.Count; index++)
+            {
+                Owner!.InactiveElements.Add(oldChildren[index]);
+            }
+
+            _children = newChildren!;
         }
     }
 }

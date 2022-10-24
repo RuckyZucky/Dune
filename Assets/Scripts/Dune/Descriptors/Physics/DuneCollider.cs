@@ -8,7 +8,7 @@ namespace Dune.Descriptors.Physics
     {
         public bool IsTrigger { get; init; }
         
-        public PhysicMaterial Material { get; init; }
+        public PhysicMaterial? Material { get; init; }
         
         public override void PopulateComponent(ref T component)
         {

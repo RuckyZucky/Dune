@@ -15,6 +15,12 @@ namespace Dune.Framework
             Rebuild();
         }
 
+        public override void Unmount()
+        {
+            _child?.Unmount();
+            base.Unmount();
+        }
+
         public override void Rebuild()
         {
             
@@ -28,6 +34,7 @@ namespace Dune.Framework
                 }
                 else
                 {
+                    Owner!.InactiveElements.Add(_child);
                     _child = newChild;
                     _child.Mount(this);
                 }
