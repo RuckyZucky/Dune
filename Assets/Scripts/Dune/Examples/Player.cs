@@ -1,12 +1,8 @@
 ﻿#nullable enable
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Dune.Descriptors;
 using Dune.Descriptors.Physics;
 using Dune.Descriptors.Scripts;
 using Dune.Framework;
-using Dune.Objects;
 using Dune.Objects.Primitives;
 using UnityEngine;
 
@@ -25,8 +21,6 @@ namespace Dune.Examples
 
         public override DuneObject Build()
         {
-            // return new DuneEmpty();
-            
             return new DuneScriptable
             {
                 Update = () =>

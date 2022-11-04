@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Dune.Framework;
+using UnityEngine;
 
 namespace Dune.Descriptors.Scripts
 {
@@ -20,9 +21,9 @@ namespace Dune.Descriptors.Scripts
         public Action? OnApplicationQuit { get; init; } = null;
         public Action? OnBecameVisible { get; init; } = null;
         public Action? OnBecameInvisible { get; init; } = null;
-        public Action? OnCollisionEnter { get; init; } = null;
-        public Action? OnCollisionExit { get; init; } = null;
-        public Action? OnCollisionStay { get; init; } = null;
+        public Action<Collision>? OnCollisionEnter { get; init; } = null;
+        public Action<Collision>? OnCollisionExit { get; init; } = null;
+        public Action<Collision>? OnCollisionStay { get; init; } = null;
         public Action? OnMouseDown { get; init; } = null;
         public Action? OnMouseDrag { get; init; } = null;
         public Action? OnMouseEnter { get; init; } = null;
@@ -30,9 +31,9 @@ namespace Dune.Descriptors.Scripts
         public Action? OnMouseOver { get; init; } = null;
         public Action? OnMouseUp { get; init; } = null;
         public Action? OnMouseUpAsButton { get; init; } = null;
-        public Action? OnTriggerEnter { get; init; } = null;
-        public Action? OnTriggerExit { get; init; } = null;
-        public Action? OnTriggerStay { get; init; } = null;
+        public Action<Collider>? OnTriggerEnter { get; init; } = null;
+        public Action<Collider>? OnTriggerExit { get; init; } = null;
+        public Action<Collider>? OnTriggerStay { get; init; } = null;
 
         public override void PopulateComponent(ref ScriptableBehaviour component)
         {

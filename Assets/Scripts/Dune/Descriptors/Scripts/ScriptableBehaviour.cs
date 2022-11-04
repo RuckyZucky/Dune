@@ -20,9 +20,9 @@ namespace Dune.Descriptors.Scripts
         public Action? OnApplicationQuitAction { get; set; } = null;
         public Action? OnBecameVisibleAction { get; set; } = null;
         public Action? OnBecameInvisibleAction { get; set; } = null;
-        public Action? OnCollisionEnterAction { get; set; } = null;
-        public Action? OnCollisionExitAction { get; set; } = null;
-        public Action? OnCollisionStayAction { get; set; } = null;
+        public Action<Collision>? OnCollisionEnterAction { get; set; } = null;
+        public Action<Collision>? OnCollisionExitAction { get; set; } = null;
+        public Action<Collision>? OnCollisionStayAction { get; set; } = null;
         public Action? OnMouseDownAction { get; set; } = null;
         public Action? OnMouseDragAction { get; set; } = null;
         public Action? OnMouseEnterAction { get; set; } = null;
@@ -30,9 +30,9 @@ namespace Dune.Descriptors.Scripts
         public Action? OnMouseOverAction { get; set; } = null;
         public Action? OnMouseUpAction { get; set; } = null;
         public Action? OnMouseUpAsButtonAction { get; set; } = null;
-        public Action? OnTriggerEnterAction { get; set; } = null;
-        public Action? OnTriggerExitAction { get; set; } = null;
-        public Action? OnTriggerStayAction { get; set; } = null;
+        public Action<Collider>? OnTriggerEnterAction { get; set; } = null;
+        public Action<Collider>? OnTriggerExitAction { get; set; } = null;
+        public Action<Collider>? OnTriggerStayAction { get; set; } = null;
 
         private void Update()
         {
@@ -106,17 +106,17 @@ namespace Dune.Descriptors.Scripts
 
         private void OnCollisionEnter(Collision collision)
         {
-            OnCollisionEnterAction?.Invoke();
+            OnCollisionEnterAction?.Invoke(collision);
         }
 
         private void OnCollisionExit(Collision other)
         {
-            OnCollisionExitAction?.Invoke();
+            OnCollisionExitAction?.Invoke(other);
         }
 
         private void OnCollisionStay(Collision collisionInfo)
         {
-            OnCollisionStayAction?.Invoke();
+            OnCollisionStayAction?.Invoke(collisionInfo);
         }
 
         private void OnMouseDown()
@@ -156,17 +156,17 @@ namespace Dune.Descriptors.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            OnTriggerEnterAction?.Invoke();
+            OnTriggerEnterAction?.Invoke(other);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            OnTriggerExitAction?.Invoke();
+            OnTriggerExitAction?.Invoke(other);
         }
 
         private void OnTriggerStay(Collider other)
         {
-            OnTriggerStayAction?.Invoke();
+            OnTriggerStayAction?.Invoke(other);
         }
     }
 }

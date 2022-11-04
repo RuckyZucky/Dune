@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Dune.Framework
 {
@@ -53,13 +52,11 @@ namespace Dune.Framework
                 {
                     if (child.Object?.GetType() == newObject.GetType())
                     {
-                        Debug.Log("Just Update");
                         child.Update(ref newObject);
                         newChildren[index] = child;
                     }
                     else
                     {
-                        Debug.Log($"Recreate because {child.Object?.GetType()} is not {newObject.GetType()}");
                         Owner!.InactiveElements.Add(child);
                         newChildren[index] = newChild;
                         newChild.Mount(this);
@@ -67,7 +64,6 @@ namespace Dune.Framework
                 }
                 else
                 {
-                    Debug.Log("Create new");
                     newChildren[index] = newChild;
                     newChild.Mount(this);
                 }
