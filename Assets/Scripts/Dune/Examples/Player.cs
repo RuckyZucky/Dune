@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Dune.Descriptors;
 using Dune.Descriptors.Physics;
 using Dune.Descriptors.Scripts;
 using Dune.Framework;
@@ -12,7 +13,7 @@ namespace Dune.Examples
     {
         private bool _useGravity = false;
 
-        private List<DuneObject> _children = new List<DuneObject>();
+        private List<DuneObject> _children = new();
 
         public Player()
         {
@@ -32,7 +33,7 @@ namespace Dune.Examples
 
                     if (Input.GetKeyDown(KeyCode.KeypadPlus))
                     {
-                        SetState(() => _children.Add(new DuneCube()));
+                        SetState(() => _children.Add(GenerateChild(_children.Count)));
                     }
                     
                     if (Input.GetKeyDown(KeyCode.KeypadMinus))
@@ -50,6 +51,16 @@ namespace Dune.Examples
                         Children = _children
                     },
                 }
+            };
+        }
+
+        private DuneObject GenerateChild(int index)
+        {
+            return new DuneTransform
+            {
+                Scale = new Vector3(0.1f, 0.1f, 0.1f),
+                Position = new Vector3(0.5f, (index + 1) * 0.2f, 0.5f),
+                Target = new DuneCube(),
             };
         }
     }

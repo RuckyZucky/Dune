@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System.Collections.Generic;
 using Dune.Framework;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace Dune.Objects
             var gameObject = new GameObject(name: Name)
             {
                 tag = Tag,
-                layer = Layer
+                layer = Layer,
             };
             return gameObject;
         }
