@@ -6,11 +6,13 @@ namespace Dune.Descriptors
 {
     public class DuneTransform : DuneDescriptor<Transform>
     {
-        public Vector3 Position { get; init; }
+        public Vector3? Position { get; init; }
         
-        public Quaternion Rotation { get; init; }
+        public Vector3? LocalPosition { get; init; }
         
-        public Vector3 Scale { get; init; }
+        public Quaternion? Rotation { get; init; }
+        
+        public Vector3? Scale { get; init; }
         
         public override Component ApplyComponent(GameObject gameObject)
         {
@@ -22,9 +24,10 @@ namespace Dune.Descriptors
 
         public override void PopulateComponent(ref Transform transform)
         {
-            transform.position = Position;
-            transform.rotation = Rotation;
-            transform.localScale = Scale;
+            if (Position != null) transform.position = Position.Value;
+            if (LocalPosition != null) transform.localPosition = LocalPosition.Value;
+            if (Rotation != null) transform.rotation = Rotation.Value;
+            if (Scale != null) transform.localScale = Scale.Value;
         }
     }
 }

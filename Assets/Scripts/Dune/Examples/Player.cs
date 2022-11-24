@@ -9,11 +9,26 @@ using UnityEngine;
 
 namespace Dune.Examples
 {
-    public class Player : StatefulDuneObject
+    public struct PlayerState
     {
-        private bool _useGravity = false;
+        public bool UseGravity { get; set; }
+        public List<DuneObject> Children { get; set; }
+    }
+    
+    public class Player : StatefulDuneObject<PlayerState>
+    {
 
-        private List<DuneObject> _children = new();
+        private PlayerState _state = new PlayerState
+        {
+            UseGravity = false,
+            Children = new(),
+        };
+
+        public override PlayerState State
+        {
+            get => _state;
+            set => _state = value;
+        }
 
         public Player()
         {
@@ -28,27 +43,27 @@ namespace Dune.Examples
                 {
                     if (Input.GetKeyDown("space"))
                     {
-                        SetState(() => _useGravity ^= true);
+                        SetState(() => _state.UseGravity ^= true);
                     }
 
                     if (Input.GetKeyDown(KeyCode.KeypadPlus))
                     {
-                        SetState(() => _children.Add(GenerateChild(_children.Count)));
+                        SetState(() => _state.Children.Add(GenerateChild(_state.Children.Count)));
                     }
                     
                     if (Input.GetKeyDown(KeyCode.KeypadMinus))
                     {
-                        SetState(() => _children.RemoveAt(_children.Count - 1));
+                        SetState(() => _state.Children.RemoveAt(_state.Children.Count - 1));
                     }
                 },
                 Target = new DuneRigidbody
                 {
-                    UseGravity = _useGravity,
+                    UseGravity = _state.UseGravity,
                     Target = new DuneCapsule
                     {
                         Name = "Player",
                         Tag = "Player",
-                        Children = _children
+                        Children = _state.Children
                     },
                 }
             };

@@ -26,7 +26,7 @@ namespace Dune.Framework
                 ancestor = ancestor.Parent;
             }
 
-            _render.transform.parent = (ancestor as RenderDuneElement)?.Render!.transform;
+            _render.transform.SetParent((ancestor as RenderDuneElement)?.Render!.transform, false);
         }
 
         public override void Unmount()

@@ -15,7 +15,11 @@ namespace Dune.Objects
 
         public override void UpdateGameObject(ref GameObject gameObject)
         {
+            // Do nothing
+            /*
+            Object.Destroy(gameObject);
             gameObject = CreateGameObject();
+             */
         }
     }
 }

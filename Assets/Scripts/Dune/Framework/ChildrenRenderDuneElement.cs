@@ -18,7 +18,7 @@ namespace Dune.Framework
             base.Mount(parent);
             ChildrenRenderDuneObject childrenObject = (Object as ChildrenRenderDuneObject)!;
             List<DuneElement> newChildren = new List<DuneElement>(childrenObject.Children.Count);
-            for (var i = 0; i < newChildren.Count; i++)
+            for (var i = 0; i < childrenObject.Children.Count; i++)
             {
                 newChildren.Add(childrenObject.Children[i].CreateElement());
                 newChildren[i].Mount(this);
