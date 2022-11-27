@@ -4,24 +4,25 @@ using Dune.Descriptors;
 using Dune.Descriptors.Scripts;
 using Dune.Framework;
 using Dune.Objects;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Dune.Examples.ChessGame.Scripts
 {
     public struct ChessPlayerState
     {
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        
     }
     
     public class ChessPlayer : StatefulDuneObject<ChessPlayerState>
     {
         public Action<Vector2> OnMoved { get; init; } = null!;
+        public Func<Vector2?> TryBeat { get; init; } = null!;
+        public Vector2 Pos { get; init; } = Vector2.zero;
 
         private ChessPlayerState _state = new()
         {
-            PosX = 0,
-            PosY = 0,
+            
         };
 
         public override ChessPlayerState State
@@ -34,33 +35,38 @@ namespace Dune.Examples.ChessGame.Scripts
         {
             return new DuneTransform
             {
-                Position = new Vector3(_state.PosX + 0.5f, 0.5f, _state.PosY + 0.5f),
+                Position = new Vector3(Pos.x + 0.5f, 0.5f, Pos.y + 0.5f),
                 // Scale = new Vector3(0.7f, 0.7f, 0.7f),
                 Target = new DuneScriptable
                 {
                     Update = () =>
                     {
-                        var posX = _state.PosX;
-                        var posY = _state.PosY;
+                        var posX = Pos.x;
+                        var posY = Pos.y;
                         if (Input.GetKeyUp(KeyCode.A))
                         {
-                            SetState(() => _state.PosX--);
-                            OnMoved(new Vector2(posX, posY));
+                            OnMoved(new Vector2(posX - 1, posY));
                         }
                         if (Input.GetKeyUp(KeyCode.D))
                         {
-                            SetState(() => _state.PosX++);
-                            OnMoved(new Vector2(posX, posY));
+                            OnMoved(new Vector2(posX + 1, posY));
                         }
                         if (Input.GetKeyUp(KeyCode.W))
                         {
-                            SetState(() => _state.PosY++);
-                            OnMoved(new Vector2(posX, posY));
+                            OnMoved(new Vector2(posX, posY + 1));
                         }
                         if (Input.GetKeyUp(KeyCode.S))
                         {
-                            SetState(() => _state.PosY--);
-                            OnMoved(new Vector2(posX, posY));
+                            OnMoved(new Vector2(posX, posY - 1));
+                        }
+
+                        if (Input.GetKeyUp(KeyCode.Return))
+                        {
+                            var pos = TryBeat();
+                            if (pos != null)
+                            {
+                                OnMoved(pos.Value);
+                            }
                         }
                     },
                     Target = new DuneEmpty
